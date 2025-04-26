@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 
 public class Product_Details 
@@ -42,16 +43,22 @@ public class Product_Details
       
    // selecting the deal "Discover the Magic of Dubai & Abu Dhabi: A Luxury Tour Experience"
       
-       List<WebElement> wb11 = driver.findElements(By.className("tour-detail"));
-       for(WebElement li:wb11)
+       List<WebElement> wb11 = driver.findElements(By.className("holilist-content"));
+       //System.out.println(wb1.getSize());
+       for(int i=0; i<wb11.size();i++)
        {
-    	   String hol = li.getText();
+    	   //System.out.println("value of i: "+i);
+    	   String hol = wb11.get(i).getText();
     	   if(hol.contains("Discover the Magic of Dubai & Abu Dhabi: A Luxury Tour Experience"))
     	   {
-    		 // driver.findElement(By.xpath("//button[text() = 'View Deal']")).click();
-    		   System.out.println(hol);  
+    		   //Thread.sleep(5000);
+    		   
+    		   WebElement el = driver.findElements(By.xpath("//button[@type='submit']")).get(i);
+    		   Actions act = new Actions(driver);
+    		   act.moveToElement(el).click().perform();
+    		   break;
     	   }
-    	  // System.out.println(hol);
+    	   //System.out.println(hol);
     	   
        }
 	}
