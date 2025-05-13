@@ -17,7 +17,11 @@ public class Product_Details
        
        
        homePage(driver);
-       vacationListing(driver);   
+       vacationListing(driver);
+       detailsPage(driver);
+       priceGrid(driver);
+       enquireForm(driver);
+       
 	}
 	
 	public static void homePage(WebDriver driver) throws InterruptedException
@@ -73,7 +77,69 @@ public class Product_Details
 	    	   
 	       }
 	}
-
 	
+	public static void detailsPage(WebDriver driver)
+	{
+		//click on Transfer
+		driver.findElement(By.xpath("//span[@id = 'transferCount']")).click();
+		
+		//click on the Highlight and the Day 3 Itinerary
+		//driver.findElement(By.xpath("//a[text() = 'Highlights']")).click();
+		driver.findElement(By.xpath("//div[@id = 'day3'] ")).click();
+		
+		
+	}
 	
+	public static void priceGrid(WebDriver driver) throws InterruptedException
+	{
+		// select the Airport of JFK and calander month should be August
+		Thread.sleep(3000);
+		WebElement wb1 = driver.findElement(By.xpath("//select[@id = 'flyingFrom']"));
+		Select sc = new Select(wb1);
+		sc.selectByValue("LAX: Los Angeles International Airport,Los Angeles,United States");
+		
+		Thread.sleep(3000);
+		WebElement wb2 = driver.findElement(By.xpath("//select[@id = 'hdnDepartDateHolidayDetailed']"));
+		Select sd = new Select(wb2);
+		sd.selectByValue("aug-2025");
+		
+		//click on the Enquire Now Button
+		driver.findElement(By.xpath("//a[text() = 'Enquire Now']")).click();
+	}
+	
+	public static void enquireForm(WebDriver driver) throws InterruptedException
+	{
+		//filling the Enquire form
+		String pax_name = "Prakash Singh Rajput";
+		String pax_email = "prakash@moresandtechnologies.com";
+		String pax_phone = "7978670045";
+		
+		driver.findElement(By.xpath("//input[@id = 'enquiryNameText']")).sendKeys(pax_name);
+		driver.findElement(By.id("enquiryEmailText")).sendKeys(pax_email);
+		
+		Thread.sleep(3);
+		//click on the country code and select India then Enter the Phone no
+		driver.findElement(By.xpath("//div[@class = 'iti__flag-container']")).click();
+		driver.findElement(By.xpath("//li[@data-dial-code = '91']")).click();
+		driver.findElement(By.id("txtPhones")).sendKeys(pax_phone);
+		
+		Thread.sleep(2);
+		//select the 5  Travelers from the dropdown
+		WebElement wb3 = driver.findElement(By.xpath("//select[@id = 'travellers']"));
+		Select se = new Select(wb3);
+		se.selectByValue("5");
+		
+		//enter the message and click on check box for accept
+		driver.findElement(By.xpath("//textarea[@type = 'textarea']")).sendKeys("Hi this is Prakash Singh Rajput from Phorfic");
+		driver.findElement(By.id("marketing1")).click();
+		
+		//click on the Enquire Now button
+		WebElement wb5 =  driver.findElement(By.xpath("//div[@id = 'btnEnquireSubmit']"));
+		  wb5.click();
+		  
+		  System.out.println(wb5.isSelected());
+		
+			
+		
+	}	
 }
